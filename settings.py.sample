@@ -1,0 +1,10 @@
+# Bot Details
+TOKEN = '***** PUT YOUR TOKEN HERE *****'
+
+# General Settings
+HANDLER_SUFFIX = 'handler'
+
+# Request Configuration
+REQUEST_KWARGS = {
+	'proxy_url': 'socks5h://localhost:<port>/',        # SOCKS Proxy
+}
