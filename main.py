@@ -3,7 +3,21 @@ import logging
 from telegram.ext import Updater
 
 import handlers
+from functions import get_db
 from settings import TOKEN, HANDLER_SUFFIX, REQUEST_KWARGS
+
+
+def init_db():
+	chats_table_sql = """
+		CREATE TABLE IF NOT EXISTS chats(
+			chat_id TEXT UNIQUE NOT NULL
+		)
+	"""
+
+	db, cursor = get_db()
+	cursor.execute(chats_table_sql)
+	db.commit()
+	db.close()
 
 
 def setup_configs():
@@ -26,6 +40,7 @@ def add_handlers(dispatcher):
 
 
 if __name__ == "__main__":
+	init_db()
 	setup_configs()
 
 	updater, dispatcher, job_queue = get_bot()
