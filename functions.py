@@ -4,30 +4,22 @@ import sqlite3
 from telegram.ext import Updater
 
 import handlers
+from db_commands import GET_OR_CREATE_CHATS_TABLE
 from local_settings import TOKEN
 from settings import DB_NAME, HANDLER_SUFFIX, REQUEST_KWARGS
 
 
-def get_db():
+def db_execute(sql):
 	db = sqlite3.connect(DB_NAME)
 	cursor = db.cursor()
-	return db, cursor
-
-
-def init_db():
-	chats_table_sql = """
-		CREATE TABLE IF NOT EXISTS chats(
-			chat_id TEXT UNIQUE NOT NULL
-		)
-	"""
-
-	db, cursor = get_db()
-	cursor.execute(chats_table_sql)
+	cursor.execute(sql)
 	db.commit()
 	db.close()
 
 
 def setup_configs():
+	db_execute(GET_OR_CREATE_CHATS_TABLE)
+
 	logging.basicConfig(
 		format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
 		level=logging.INFO
