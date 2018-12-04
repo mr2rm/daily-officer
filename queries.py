@@ -3,3 +3,8 @@ GET_OR_CREATE_CHATS_TABLE = """
 		chat_id TEXT UNIQUE NOT NULL
 	)
 """
+
+INSERT_INTO_CHATS_TABLE = """
+	INSERT INTO chats(chat_id)
+	VALUES (?)
+"""
