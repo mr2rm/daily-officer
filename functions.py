@@ -4,15 +4,15 @@ import sqlite3
 from telegram.ext import Updater
 
 import handlers
-from db_commands import GET_OR_CREATE_CHATS_TABLE
+from queries import GET_OR_CREATE_CHATS_TABLE
 from local_settings import TOKEN
 from settings import DB_NAME, HANDLER_SUFFIX, REQUEST_KWARGS
 
 
-def db_execute(sql):
+def db_execute(query, params=None):
 	db = sqlite3.connect(DB_NAME)
 	cursor = db.cursor()
-	cursor.execute(sql)
+	cursor.execute(query, params)
 	db.commit()
 	db.close()
 
