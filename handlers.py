@@ -1,17 +1,23 @@
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from functions import db_execute, is_admin
-from queries import INSERT_INTO_CHATS_TABLE
+from queries import INSERT_INTO_CHATS_TABLE, GET_CHAT
 
 
 def save_chat(bot, update):
 	message = update.message
 	chat_id = message.chat_id
+	text = 'Permission Denied'
+
 	if is_admin(bot, message):
-		db_execute(INSERT_INTO_CHATS_TABLE, chat_id)
-		bot.send_message(chat_id=chat_id, text='OK')
-	else:
-		bot.send_message(chat_id=chat_id, text='Permission Denied')
+		chats = db_execute(GET_CHAT, chat_id, fetch=True)
+		text = 'Already Started'
+
+		if not chats:
+			text = 'OK'
+			db_execute(INSERT_INTO_CHATS_TABLE, chat_id)
+
+	bot.send_message(chat_id=chat_id, text=text)
 
 
 def set_timespan(bot, update):

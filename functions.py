@@ -3,10 +3,12 @@ import sqlite3
 from settings import DB_NAME
 
 
-def db_execute(query, *args):
+def db_execute(query, *args, **kwargs):
 	db = sqlite3.connect(DB_NAME)
 	cursor = db.cursor()
 	cursor.execute(query, args)
+	if kwargs.get('fetch'):
+		return cursor.fetchall()
 	db.commit()
 	db.close()
 

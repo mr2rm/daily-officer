@@ -8,3 +8,8 @@ INSERT_INTO_CHATS_TABLE = """
 	INSERT INTO chats(chat_id)
 	VALUES (?)
 """
+
+GET_CHAT = """
+	SELECT * FROM chats
+	WHERE chat_id = (?)
+"""
