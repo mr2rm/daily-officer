@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from telegram.ext import Updater
@@ -7,6 +8,7 @@ from functions import db_execute
 from local_settings import TOKEN
 from queries import GET_OR_CREATE_CHATS_TABLE
 from settings import REQUEST_KWARGS, HANDLER_SUFFIX
+from tasks import send_daily_message
 
 
 def setup_configs():
@@ -34,6 +36,8 @@ if __name__ == "__main__":
 
 	updater, dispatcher, job_queue = get_bot()
 	add_handlers(dispatcher)
+
+	job_queue.run_daily(send_daily_message, datetime.time())
 
 	updater.start_polling()
 	updater.idle()
