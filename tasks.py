@@ -1,5 +1,6 @@
 import datetime
 
+import jdatetime
 from telegram.error import ChatMigrated, BadRequest
 
 from functions import db_execute, get_random_time, get_random_penalty
@@ -12,15 +13,20 @@ def send_daily_message(bot, job):
 		return
 
 	active_chats = db_execute(GET_ACTIVE_CHATS, fetch=True)
+	tomorrow_jdate = jdatetime.date.today() + datetime.timedelta(days=1)
 	start_time, end_time = datetime.time(hour=9, minute=30), datetime.time(hour=11, minute=30)
 	min_penalty, max_penalty = 0, 7000
-	template_text = 'Time: {time}\nPenalty: {penalty}'
+	template_text = 'Date: {date}\nTime: {time}\nPenalty: {penalty}'
 
 	for chat in active_chats:
 		chat_id = chat[0]
 		random_time = get_random_time(start_time, end_time)
 		random_penalty = get_random_penalty(min_penalty, max_penalty)
-		text = template_text.format(time=random_time.strftime('%H:%M'), penalty=random_penalty)
+		text = template_text.format(
+			date=tomorrow_jdate.strftime('%A - %B %-dth, %Y'),
+			time=random_time.strftime('%H:%M'),
+			penalty=random_penalty,
+		)
 
 		try:
 			message = bot.send_message(chat_id=chat_id, text=text)
