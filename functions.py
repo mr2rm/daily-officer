@@ -3,6 +3,8 @@ import datetime
 import math
 import random
 
+import pytz
+
 from settings import DB_NAME
 
 
@@ -48,3 +50,19 @@ def get_random_penalty(min_penalty, max_penalty):
 	penalty_range = range(min_penalty, max_penalty + 1, 1000)
 
 	return random.choice(penalty_range)
+
+
+def convert_time(input_time, src='Asia/Tehran', dst='UTC'):
+	src_tz, dst_tz = pytz.timezone(src), pytz.timezone(dst)
+	time_data = dict(
+		hour=input_time.hour,
+		minute=input_time.minute,
+		second=input_time.second,
+		microsecond=input_time.microsecond
+	)
+
+	src_now = datetime.datetime.now(src_tz)
+	edited_src_now = src_now.replace(**time_data)
+	edited_dst_now = edited_src_now.astimezone(dst_tz)
+
+	return edited_dst_now.time()

@@ -4,7 +4,7 @@ import logging
 from telegram.ext import Updater
 
 import handlers
-from functions import db_execute
+from functions import db_execute, convert_time
 from local_settings import TOKEN
 from queries import GET_OR_CREATE_CHATS_TABLE
 from settings import REQUEST_KWARGS, HANDLER_SUFFIX
@@ -37,7 +37,8 @@ if __name__ == "__main__":
 	updater, dispatcher, job_queue = get_bot()
 	add_handlers(dispatcher)
 
-	job_queue.run_daily(send_daily_message, datetime.time())
+	daily_message_time = convert_time(datetime.time(hour=12, minute=22), dst='Asia/Tehran')
+	job_queue.run_daily(send_daily_message, daily_message_time)
 
 	updater.start_polling()
 	updater.idle()
