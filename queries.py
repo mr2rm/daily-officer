@@ -13,11 +13,21 @@ INSERT_INTO_CHATS_TABLE = """
 """
 
 GET_CHAT = """
-	SELECT * FROM chats
-	WHERE chat_id = (?)
+	SELECT *
+	FROM chats
+	WHERE chat_id = ?
 """
 
 GET_ACTIVE_CHATS = """
-	SELECT * FROM chats
+	SELECT *
+	FROM chats
 	WHERE is_active = 1
+"""
+
+UPDATE_CHAT_ID = """
+	UPDATE chats
+	SET
+		chat_id = ?,
+		last_modified_date = datetime('now')
+	WHERE chat_id = ?
 """
