@@ -37,7 +37,7 @@ if __name__ == "__main__":
 	updater, dispatcher, job_queue = get_bot()
 	add_handlers(dispatcher)
 
-	daily_message_time = convert_time(datetime.time(hour=12, minute=22), dst='Asia/Tehran')
+	daily_message_time = convert_time(datetime.time(hour=21))
 	job_queue.run_daily(send_daily_message, daily_message_time)
 
 	updater.start_polling()
