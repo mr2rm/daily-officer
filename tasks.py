@@ -8,12 +8,11 @@ from queries import GET_ACTIVE_CHATS, UPDATE_CHAT_ID
 
 
 def send_daily_message(bot, job):
-	today = datetime.date.today()
-	if 3 <= today.weekday() <= 4:
+	tomorrow_jdate = jdatetime.date.today() + datetime.timedelta(days=1)
+	if tomorrow_jdate.weekday() in [5, 6]:
 		return
 
 	active_chats = db_execute(GET_ACTIVE_CHATS, fetch=True)
-	tomorrow_jdate = jdatetime.date.today() + datetime.timedelta(days=1)
 	start_time, end_time = datetime.time(hour=9, minute=30), datetime.time(hour=11, minute=30)
 	min_penalty, max_penalty = 0, 7000
 	template_text = 'Date: {date}\nTime: {time}\nPenalty: {penalty}'
