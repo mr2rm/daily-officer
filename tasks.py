@@ -1,6 +1,6 @@
 import datetime
 
-from telegram.error import ChatMigrated
+from telegram.error import ChatMigrated, BadRequest
 
 from functions import db_execute, get_random_time, get_random_penalty
 from queries import GET_ACTIVE_CHATS, UPDATE_CHAT_ID
@@ -22,8 +22,13 @@ def send_daily_message(bot, job):
 		)
 
 		try:
-			bot.send_message(chat_id=chat_id, text=text)
+			message = bot.send_message(chat_id=chat_id, text=text)
 		except ChatMigrated as error:
 			db_execute(UPDATE_CHAT_ID, error.new_chat_id, chat_id)
 			chat_id = error.new_chat_id
-			bot.send_message(chat_id=chat_id, text=text)
+			message = bot.send_message(chat_id=chat_id, text=text)
+
+		try:
+			bot.pin_chat_message(chat_id, message.message_id)
+		except BadRequest:
+			pass
