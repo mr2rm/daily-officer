@@ -1,7 +1,7 @@
 from telegram.ext import CommandHandler, MessageHandler, Filters
 
 from functions import db_execute, is_admin
-from queries import INSERT_INTO_CHATS_TABLE, GET_CHAT
+from queries.postgresql import INSERT_INTO_CHATS_TABLE, GET_CHAT
 
 
 def save_chat(bot, update):

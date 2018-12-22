@@ -5,7 +5,7 @@ from telegram.ext import Updater
 
 import handlers
 from functions import db_execute, convert_time
-from queries import GET_OR_CREATE_CHATS_TABLE
+from queries.postgresql import GET_OR_CREATE_CHATS_TABLE
 from settings import REQUEST_KWARGS, HANDLER_SUFFIX, TOKEN
 from tasks import send_daily_message
 

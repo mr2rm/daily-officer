@@ -7,15 +7,15 @@ GET_OR_CREATE_CHATS_TABLE = """
 	)
 """
 
-INSERT_INTO_CHATS_TABLE = """
-	INSERT INTO chats(chat_id)
-	VALUES (?)
-"""
-
 GET_CHAT = """
 	SELECT *
 	FROM chats
 	WHERE chat_id = ?
+"""
+
+INSERT_INTO_CHATS_TABLE = """
+	INSERT INTO chats(chat_id)
+	VALUES (?)
 """
 
 GET_ACTIVE_CHATS = """

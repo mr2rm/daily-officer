@@ -4,7 +4,7 @@ import jdatetime
 from telegram.error import ChatMigrated, BadRequest
 
 from functions import db_execute, get_random_time, get_random_penalty
-from queries import GET_ACTIVE_CHATS, UPDATE_CHAT_ID
+from queries.postgresql import GET_ACTIVE_CHATS, UPDATE_CHAT_ID
 
 
 def send_daily_message(bot, job):

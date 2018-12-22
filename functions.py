@@ -2,26 +2,28 @@ import datetime
 import math
 import random
 
+import psycopg2
 import pytz
+
+from settings import DATABASE
 
 
 def db_execute(query, *args, **kwargs):
-	# PostgreSQL
-	# todo: connect to database and run query
-
 	# SQLite
 	"""
 		import sqlite3
 		from settings import DB_NAME
-
 		db = sqlite3.connect(DB_NAME)
-		cursor = db.cursor()
-		cursor.execute(query, args)
-		if kwargs.get('fetch'):
-			return cursor.fetchall()
-		db.commit()
-		db.close()
 	"""
+
+	# PostgreSQL
+	db = psycopg2.connect(**DATABASE)
+	cursor = db.cursor()
+	cursor.execute(query, args)
+	if kwargs.get('fetch'):
+		return cursor.fetchall()
+	db.commit()
+	db.close()
 
 
 def is_admin(bot, message):
