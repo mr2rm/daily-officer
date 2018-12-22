@@ -6,5 +6,16 @@ HANDLER_SUFFIX = 'handler'
 
 # Request Configuration
 REQUEST_KWARGS = {
-	'proxy_url': 'socks5h://localhost:<port>/',        # SOCKS Proxy
+	'proxy_url': 'socks5h://localhost:<port>/',     # SOCKS Proxy
 }
+
+# Database Settings
+# PostgreSQL
+DATABASE = {
+	'host': 'HOST',
+	'database': 'DATABASE',
+	'user': 'USER',
+	'password': 'PASSWORD',
+}
+# SQLite
+DB_NAME = 'NAME'

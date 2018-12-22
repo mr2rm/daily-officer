@@ -1,21 +1,27 @@
-import sqlite3
 import datetime
 import math
 import random
 
 import pytz
 
-from settings import DB_NAME
-
 
 def db_execute(query, *args, **kwargs):
-	db = sqlite3.connect(DB_NAME)
-	cursor = db.cursor()
-	cursor.execute(query, args)
-	if kwargs.get('fetch'):
-		return cursor.fetchall()
-	db.commit()
-	db.close()
+	# PostgreSQL
+	# todo: connect to database and run query
+
+	# SQLite
+	"""
+		import sqlite3
+		from settings import DB_NAME
+
+		db = sqlite3.connect(DB_NAME)
+		cursor = db.cursor()
+		cursor.execute(query, args)
+		if kwargs.get('fetch'):
+			return cursor.fetchall()
+		db.commit()
+		db.close()
+	"""
 
 
 def is_admin(bot, message):
