@@ -9,14 +9,6 @@ from settings import DATABASE
 
 
 def db_execute(query, *args, **kwargs):
-	# SQLite
-	"""
-		import sqlite3
-		from settings import DB_NAME
-		db = sqlite3.connect(DB_NAME)
-	"""
-
-	# PostgreSQL
 	db = psycopg2.connect(**DATABASE)
 	cursor = db.cursor()
 	cursor.execute(query, args)

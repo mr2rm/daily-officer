@@ -10,12 +10,9 @@ REQUEST_KWARGS = {
 }
 
 # Database Settings
-# PostgreSQL
 DATABASE = {
 	'host': 'HOST',
 	'database': 'DATABASE',
 	'user': 'USER',
 	'password': 'PASSWORD',
 }
-# SQLite
-DB_NAME = 'NAME'
