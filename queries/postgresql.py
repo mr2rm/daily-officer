@@ -24,11 +24,10 @@ GET_ACTIVE_CHATS = """
 	WHERE is_active = TRUE
 """
 
-# todo: update last_modified_date to postgres version
 UPDATE_CHAT_ID = """
 	UPDATE chats
 	SET
 		chat_id = %s,
-		last_modified_date = datetime('now')
+		last_modified_date = NOW()
 	WHERE chat_id = %s
 """
