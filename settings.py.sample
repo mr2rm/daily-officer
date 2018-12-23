@@ -12,6 +12,7 @@ REQUEST_KWARGS = {
 # Database Settings
 DATABASE = {
 	'host': 'HOST',
+	'port': 'PORT',
 	'database': 'DATABASE',
 	'user': 'USER',
 	'password': 'PASSWORD',
