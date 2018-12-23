@@ -13,13 +13,17 @@ def send_daily_message(bot, job):
 		return
 
 	active_chats = db_execute(GET_ACTIVE_CHATS, fetch=True)
-	start_time, end_time = datetime.time(hour=9, minute=30), datetime.time(hour=11, minute=30)
-	min_penalty, max_penalty = 0, 7000
 	template_text = 'Date: {date}\nTime: {time}\nPenalty: {penalty}'
+
+	min_penalty, max_penalty = 0, 7000
+	start_time, end_time = datetime.time(hour=9, minute=30), datetime.time(hour=11, minute=30)
+	exception_times = [
+		(datetime.time(hour=10), datetime.time(hour=10, minute=30))
+	]
 
 	for chat in active_chats:
 		chat_id = chat[0]
-		random_time = get_random_time(start_time, end_time)
+		random_time = get_random_time(start_time, end_time, exception_times)
 		random_penalty = get_random_penalty(min_penalty, max_penalty)
 		text = template_text.format(
 			date=tomorrow_jdate.strftime('%A - %B %-dth, %Y'),

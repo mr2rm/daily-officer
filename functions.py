@@ -34,7 +34,7 @@ def is_admin(bot, message):
 	return message.from_user in admin_users
 
 
-def get_random_time(start_time, end_time):
+def get_random_time(start_time, end_time, exception_times=None):
 	def total_minute(this_time):
 		return this_time.hour * 60 + this_time.minute
 
@@ -45,7 +45,22 @@ def get_random_time(start_time, end_time):
 	if start_time > end_time:
 		raise ValueError('start_time must be less than or equal to end_time')
 
-	random_minutes = random.randint(total_minute(start_time), total_minute(end_time))
+	if exception_times is None:
+		exception_times = []
+
+	choices = []
+	start, end = total_minute(start_time), total_minute(end_time)
+	for time_minutes in range(start, end + 1):
+		is_valid = True
+		for exception_time in exception_times:
+			l, r = total_minute(exception_time[0]), total_minute(exception_time[1])
+			if l <= time_minutes <= r:
+				is_valid = False
+				break
+		if is_valid:
+			choices.append(time_minutes)
+
+	random_minutes = random.choice(choices)
 	return get_time(random_minutes)
 
 
